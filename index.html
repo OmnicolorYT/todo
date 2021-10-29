@@ -1,0 +1,37 @@
+<!DOCTYPE html>
+<html lang="ru">
+<head>
+    <meta charset="UTF-8">
+    <title>todos</title>
+    <link rel="stylesheet" href="styles.css">
+</head>
+<body>
+    <header>
+        <h1>todos</h1>
+    </header>
+    <section class="todo">
+        <input class="toggle-all" type="checkbox">
+        <input class="new-todo" type="text" placeholder="Что нужно сделать?" autofocus>
+        <ul class="todolist">
+            <li class="">
+                <div class="item">
+                    <input class="toggle" type="checkbox">
+                    <label>Покормить кота</label>
+                    <button class="destroy"></button>
+                    <input class="edit hidden" type="text">
+                </div>
+            </li>
+        </ul>
+        <div class="footer">
+            <p class="counter">0 заданий осталось</p>
+            <div class="buttons">
+                <a class="all checked">Все</a>
+                <a class="active">Активные</a>
+                <a class="complete">Выполненные</a>
+            </div>
+            <a class="clear">Очистить выполненные</a>
+        </div>
+    </section>
+    <script src="script.js"></script>
+</body>
+</html>
