@@ -176,6 +176,7 @@ function updateButtons () {
                 item.remove();
             }
             updateDB();
+            updateCounter();
         }
     }
 }
@@ -294,6 +295,7 @@ function listener() {
                 deleteButton.classList.remove('hidden');
                 edit.classList.add('hidden');
                 label.textContent = edit.value;
+                updateCounter();
             }
         })
     }
