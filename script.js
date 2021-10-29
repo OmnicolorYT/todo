@@ -175,6 +175,7 @@ function updateButtons () {
             if (edit.value === '') {
                 item.remove();
             }
+            items = todolist.querySelectorAll('li');
             updateDB();
             updateCounter();
         }
@@ -295,11 +296,17 @@ function listener() {
                 deleteButton.classList.remove('hidden');
                 edit.classList.add('hidden');
                 label.textContent = edit.value;
+                items = todolist.querySelectorAll('li');
                 updateCounter();
+                updateDB();
             }
         })
     }
+}
 
+window.onbeforeunload = function () {
+    updateDB();
+    return null;
 }
 
 listener();
