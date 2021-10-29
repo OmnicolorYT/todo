@@ -63,6 +63,7 @@ function todoConstructor (value) {
     newLi.append(newElement);
     todolist.append(newLi);
     items = todolist.querySelectorAll('li');
+    updateCounter();
     updateButtons();
     listener();
 }
@@ -302,5 +303,4 @@ function listener() {
 
 }
 
-updateCounter();
 listener();
