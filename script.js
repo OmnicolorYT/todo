@@ -302,4 +302,5 @@ function listener() {
 
 }
 
+updateCounter();
 listener();
