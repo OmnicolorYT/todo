@@ -29,7 +29,6 @@ function updateCounter() {
     else {
         counter.textContent = count + ' заданий осталось';
     }
-    console.log(items);
 }
 
 //конструктор новых задач
