@@ -129,11 +129,9 @@ function updateDB() {
 
 function loadDB() {
     let objectStore = db.transaction("todolist").objectStore("todolist");
-    let todos = [];
     objectStore.openCursor().onsuccess = function(event) {
         let cursor = event.target.result;
         if (cursor) {
-            todos.push(cursor.value);
             todoConstructor(cursor.value);
             cursor.continue();
         }
