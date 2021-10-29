@@ -90,8 +90,6 @@ document.addEventListener("DOMContentLoaded", function() {
     }
 
     openRequest.onsuccess = function(e) {
-        console.log("running onsuccess");
-
         db = e.target.result;
         loadDB();
         items[0].remove();
@@ -123,9 +121,6 @@ function updateDB() {
         request.onerror = function (e) {
             console.log("Error", e.target.error.name);
         }
-        request.onsuccess = function () {
-            console.log("Успешно сохранил данные");
-        }
         key++;
     }
 }
@@ -141,9 +136,6 @@ function loadDB() {
             todos.push(cursor.value);
             todoConstructor(cursor.value);
             cursor.continue();
-        }
-        else {
-            console.log("Got all todos: " + todos);
         }
     };
 }
