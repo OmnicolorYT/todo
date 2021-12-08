@@ -8,6 +8,9 @@ let clearButton = document.querySelector('.clear');
 let input = document.querySelector('.new-todo');
 let items = todolist.querySelectorAll('li');
 let toggleAll = todo.querySelector('.toggle-all');
+let fullheight = 0;
+let completebutton = false;
+let editHeight = 0;
 
 
 //обновление счетчика оставшихся задач
@@ -42,21 +45,24 @@ function todoConstructor (value) {
     let newLi = document.createElement('li');
     let newElement = document.createElement('div');
     let newInputToggle = document.createElement('input');
-    let newLabel = document.createElement('label');
+    let newP = document.createElement('p');
     let newButton = document.createElement('button');
     let newInputEdit = document.createElement('input');
     newElement.classList.add('item');
     if (done) {
         newElement.classList.add('done');
     }
+    if (completebutton) {
+        newLi.classList.add('hidden');
+    }
     newInputToggle.classList.add('toggle');
     newInputToggle.type = 'checkbox';
-    newLabel.textContent = value;
+    newP.textContent = value;
     newButton.classList.add('destroy');
     newInputEdit.classList.add('edit');
     newInputEdit.classList.add('hidden');
     newElement.append(newInputToggle);
-    newElement.append(newLabel);
+    newElement.append(newP);
     newElement.append(newButton);
     newElement.append(newInputEdit);
     newLi.append(newElement);
@@ -65,6 +71,27 @@ function todoConstructor (value) {
     updateCounter();
     updateButtons();
     listener();
+    itemResize();
+}
+
+function itemResize() {
+    fullheight = 0;
+    for (let item of items) {
+        if (!item.classList.contains('hidden')) {
+            let p = item.querySelector("p");
+            let itemDiv = item.querySelector(".item");
+            let editItem = item.querySelector(".edit");
+            let height = p.offsetHeight + 13;
+            if (!editItem.classList.contains('hidden')) {
+                height += editHeight;
+            }
+            itemDiv.style.height = height + 'px';
+            item.style.height = height + 'px';
+            fullheight += height;
+        }
+    }
+    todolist.style.height = fullheight + 'px';
+    return false;
 }
 
 //работа с базой данных
@@ -109,13 +136,13 @@ function updateDB() {
     store.clear();
     let key = 1;
     for (let item of items) {
-        let label = item.querySelector("label");
+        let p = item.querySelector("p");
         let itemDiv = item.querySelector(".item");
         let str = "";
         if (itemDiv.classList.contains("done")) {
-            str = label.textContent + " done";
+            str = p.textContent + " done";
         } else {
-            str = label.textContent;
+            str = p.textContent;
         }
         let request = store.add(str, key);
         request.onerror = function (e) {
@@ -145,11 +172,14 @@ function updateButtons () {
         let itemContext = item.querySelector('.item');
         let deleteButton = item.querySelector('.destroy');
         let toggleButton = item.querySelector('.toggle');
-        let label = item.querySelector('label');
+        let p = item.querySelector('p');
         let edit = item.querySelector('.edit');
+        item.onmouseover = itemResize;
+        item.onmouseout = itemResize;
         deleteButton.onclick = function () {
             item.remove();
             items = todolist.querySelectorAll('li');
+            itemResize();
             updateDB();
             updateCounter();
         }
@@ -160,22 +190,28 @@ function updateButtons () {
             updateCounter();
         }
 
-        label.onclick = function() {
-            label.classList.add('hidden');
+        p.onclick = function() {
+            editHeight = 50;
+            p.classList.add('hidden');
             deleteButton.classList.add('hidden');
             edit.classList.remove('hidden');
-            edit.value = label.textContent;
+            edit.value = p.textContent;
+            edit.focus();
         }
 
-        edit.onblur = function () {
-            label.classList.remove('hidden');
+        edit.onblur = editExit;
+
+        function editExit() {
+            editHeight = 0;
+            p.classList.remove('hidden');
             deleteButton.classList.remove('hidden');
             edit.classList.add('hidden');
-            label.textContent = edit.value;
-            if (edit.value === '') {
+            p.textContent = edit.value;
+            if (edit.value === '' || !edit.value.trim().length) {
                 item.remove();
             }
             items = todolist.querySelectorAll('li');
+            itemResize();
             updateDB();
             updateCounter();
         }
@@ -217,6 +253,7 @@ allButton.onclick = function () {
     for (let item of items) {
         item.classList.remove('hidden');
     }
+    itemResize();
 }
 
 completeButton.onclick = function () {
@@ -234,6 +271,8 @@ completeButton.onclick = function () {
             }
         }
     }
+    completebutton = true;
+    itemResize();
 }
 
 activeButton.onclick = function () {
@@ -251,6 +290,8 @@ activeButton.onclick = function () {
             }
         }
     }
+    completebutton = false;
+    itemResize();
 }
 
 //кнопка очистки выполненных заданий
@@ -275,30 +316,46 @@ input.onblur = function () {
 //добавление новых задач
 
 function listener() {
+    document.body.addEventListener('keydown', function (e) {
+        if (e.keyCode === 27) {
+            input.focus();
+        }
+    });
     input.addEventListener('keydown', function(e) {
         if (e.keyCode === 13 && this.value !== "") {
-            todoConstructor(this.value);
-            this.value = "";
-            updateDB();
-            updateCounter();
-            items = todolist.querySelectorAll('li');
-            updateButtons();
+            if (this.value.trim().length) {
+                todoConstructor(this.value);
+                this.value = "";
+                updateDB();
+                updateCounter();
+                items = todolist.querySelectorAll('li');
+                updateButtons();
+            }
+            else {
+                this.value = "";
+            }
         }
     });
 
     for(let item of items) {
         let deleteButton = item.querySelector('.destroy');
-        let label = item.querySelector('label');
+        let p = item.querySelector('p');
         let edit = item.querySelector('.edit');
         edit.addEventListener('keydown', function (e) {
             if (e.keyCode === 13) {
-                label.classList.remove('hidden');
+                p.classList.remove('hidden');
                 deleteButton.classList.remove('hidden');
                 edit.classList.add('hidden');
-                label.textContent = edit.value;
+                if (edit.value.trim().length) {
+                    p.textContent = edit.value;
+                }
+                else {
+                    item.remove();
+                }
                 items = todolist.querySelectorAll('li');
                 updateCounter();
                 updateDB();
+                itemResize();
             }
         })
     }

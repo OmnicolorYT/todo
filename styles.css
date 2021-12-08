@@ -1,7 +1,7 @@
 body {
     padding: 0;
     width: 500px;
-    margin: 0 auto;
+    margin: 0 auto 20px;
     font-family: sans-serif;
     background-color: #efefef;
 }
@@ -46,6 +46,7 @@ h1:hover {
     -moz-transition: all 0.3s ease;
     -o-transition: all 0.3s ease;
     -webkit-transition: all 0.3s ease;
+    box-sizing: border-box;
 }
 
 .todo:hover {
@@ -60,9 +61,9 @@ h1:hover {
     border: none;
     background: url("icons/ckeck_all.png") no-repeat center center;
     background-size: 40px 40px;
-    -moz-transition: all 0.3s ease;
-    -o-transition: all 0.3s ease;
-    -webkit-transition: all 0.3s ease;
+    -moz-transition: all 0.1s ease;
+    -o-transition: all 0.1s ease;
+    -webkit-transition: all 0.1s ease;
 }
 
 .toggle-all:hover {
@@ -119,15 +120,15 @@ li {
     display: block;
 }
 
-.item:hover label {
-    width: 80%;
+.item:hover p {
+    width: 370px;
 }
 
 .item.done .toggle {
     background-image: url("icons/done.png");
 }
 
-.item.done label {
+.item.done p {
     color: lightgrey;
     text-decoration: line-through;
 }
@@ -140,20 +141,21 @@ li {
     border: none;
     background: url("icons/active.png") no-repeat center center;
     background-size: 40px 40px;
-    -moz-transition: all 0.3s ease;
-    -o-transition: all 0.3s ease;
-    -webkit-transition: all 0.3s ease;
+    -moz-transition: all 0.1s ease;
+    -o-transition: all 0.1s ease;
+    -webkit-transition: all 0.1s ease;
 }
 
 .toggle:hover {
     background-size: 45px 45px;
 }
 
-label {
-    width: 90%;
+li p {
+    width: 420px;
     font-size: 32px;
     margin-top: auto;
     margin-bottom: auto;
+    word-wrap: break-word;
 }
 
 .destroy {
@@ -197,8 +199,10 @@ label {
 .footer a {
     text-decoration: none;
     color: black;
-    height: 12px;
+    height: 16px;
     cursor: pointer;
+    box-sizing: border-box;
+    padding: 2px;
 }
 
 .buttons {
@@ -212,15 +216,20 @@ label {
     text-decoration: underline;
 }
 
-a.checked {
-    border: 1px solid black;
-}
-
 .footer .buttons a {
+    box-sizing: border-box;
     margin-left: 5px;
     margin-right: 5px;
     border-radius: 5px;
     padding: 2px;
+}
+
+.footer .buttons a:not(.checked) {
+    border: 1px solid white;
+}
+
+a.checked {
+    border: 1px solid black;
 }
 
 .footer .buttons a:not(.checked):hover {
