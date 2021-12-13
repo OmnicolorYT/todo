@@ -188,6 +188,7 @@ function updateButtons () {
             itemContext.classList.toggle('done');
             updateDB();
             updateCounter();
+            itemResize();
         }
 
         p.onclick = function() {
