@@ -189,6 +189,12 @@ function updateButtons () {
             updateDB();
             updateCounter();
             itemResize();
+            if (completeButton.classList.contains("checked")) {
+                completeShow();
+            }
+            else if (activeButton.classList.contains("checked")) {
+                activeShow();
+            }
         }
 
         p.onclick = function() {
@@ -261,6 +267,12 @@ completeButton.onclick = function () {
     allButton.classList.remove('checked');
     activeButton.classList.remove('checked');
     completeButton.classList.add('checked');
+    completeShow();
+    completebutton = true;
+    itemResize();
+}
+
+function completeShow() {
     for (let item of items) {
         let itemContext = item.querySelector('.item');
         if (itemContext.classList.contains('done')) {
@@ -272,14 +284,18 @@ completeButton.onclick = function () {
             }
         }
     }
-    completebutton = true;
-    itemResize();
 }
 
 activeButton.onclick = function () {
     allButton.classList.remove('checked');
     completeButton.classList.remove('checked');
     activeButton.classList.add('checked');
+    activeShow();
+    completebutton = false;
+    itemResize();
+}
+
+function activeShow() {
     for (let item of items) {
         let itemContext = item.querySelector('.item');
         if (!itemContext.classList.contains('done')) {
@@ -291,8 +307,6 @@ activeButton.onclick = function () {
             }
         }
     }
-    completebutton = false;
-    itemResize();
 }
 
 //кнопка очистки выполненных заданий
