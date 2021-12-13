@@ -307,6 +307,7 @@ clearButton.onclick = function () {
     updateDB();
     updateCounter();
     updateButtons();
+    itemResize();
 }
 
 input.onblur = function () {
