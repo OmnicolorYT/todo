@@ -260,6 +260,7 @@ allButton.onclick = function () {
     for (let item of items) {
         item.classList.remove('hidden');
     }
+    completebutton = false;
     itemResize();
 }
 
