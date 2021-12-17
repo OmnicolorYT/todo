@@ -50,7 +50,7 @@ function todoConstructor (value) {
     let newP = document.createElement('p');
     let newButton = document.createElement('button');
     let newInputEdit = document.createElement('input');
-    newElement.classList.add('item');
+    newElement.classList.add('item', 'js-item');
     if (done) {
         newElement.classList.add('done');
     }
