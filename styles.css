@@ -43,6 +43,7 @@ h1:hover {
     background-color: #ffffff;
     box-shadow: 0 0 15px 5px lightgrey;
     padding: 10px;
+    cursor: text;
     -moz-transition: all 0.3s ease;
     -o-transition: all 0.3s ease;
     -webkit-transition: all 0.3s ease;
@@ -61,6 +62,7 @@ h1:hover {
     border: none;
     background: url("icons/ckeck_all.png") no-repeat center center;
     background-size: 40px 40px;
+    cursor: pointer;
     -moz-transition: all 0.1s ease;
     -o-transition: all 0.1s ease;
     -webkit-transition: all 0.1s ease;
@@ -141,6 +143,7 @@ li {
     border: none;
     background: url("icons/active.png") no-repeat center center;
     background-size: 40px 40px;
+    cursor: pointer;
     -moz-transition: all 0.1s ease;
     -o-transition: all 0.1s ease;
     -webkit-transition: all 0.1s ease;
@@ -167,6 +170,7 @@ li p {
     padding: 0;
     background: url("icons/delete.png") no-repeat center center;
     background-size: 40px 40px;
+    cursor: pointer;
     -moz-transition: all 0.3s ease;
     -o-transition: all 0.3s ease;
     -webkit-transition: all 0.3s ease;
@@ -199,7 +203,6 @@ li p {
 .footer a {
     text-decoration: none;
     color: black;
-    height: 16px;
     cursor: pointer;
     box-sizing: border-box;
     padding: 2px;

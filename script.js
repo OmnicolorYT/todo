@@ -1,16 +1,18 @@
-let todo = document.querySelector('.todo');
-let todolist = todo.querySelector('.todolist');
-let counter = document.querySelector('.counter');
-let allButton = document.querySelector('.all');
-let activeButton = document.querySelector('.active');
-let completeButton = document.querySelector('.complete');
-let clearButton = document.querySelector('.clear');
-let input = document.querySelector('.new-todo');
+let todo = document.querySelector('.js-todo');
+let todolist = todo.querySelector('.js-todolist');
+let counter = document.querySelector('.js-counter');
+let allButton = document.querySelector('.js-all');
+let activeButton = document.querySelector('.js-active');
+let completeButton = document.querySelector('.js-complete');
+let clearButton = document.querySelector('.js-clear');
+let input = document.querySelector('.js-new-todo');
 let items = todolist.querySelectorAll('li');
-let toggleAll = todo.querySelector('.toggle-all');
+let toggleAll = todo.querySelector('.js-toggle-all');
 let fullheight = 0;
 let completebutton = false;
 let editHeight = 0;
+let ENTER_BUTTON = 13;
+let ESC_BUTTON = 27;
 
 
 //обновление счетчика оставшихся задач
@@ -23,10 +25,10 @@ function updateCounter() {
             count++;
         }
     }
-    if (count === 1) {
+    if (count % 10 === 1 && count % 100 !== 11) {
         counter.textContent = count + ' задание осталось';
     }
-    else if (count >= 2 && count <= 4) {
+    else if (count % 10 >= 2 && count % 10 <= 4 && (count % 100 < 12 || count % 100 > 14)) {
         counter.textContent = count + ' задания осталось';
     }
     else {
@@ -55,11 +57,11 @@ function todoConstructor (value) {
     if (completebutton) {
         newLi.classList.add('hidden');
     }
-    newInputToggle.classList.add('toggle');
+    newInputToggle.classList.add('toggle', 'js-toggle');
     newInputToggle.type = 'checkbox';
     newP.textContent = value;
-    newButton.classList.add('destroy');
-    newInputEdit.classList.add('edit');
+    newButton.classList.add('destroy', 'js-destroy');
+    newInputEdit.classList.add('edit', 'js-edit');
     newInputEdit.classList.add('hidden');
     newElement.append(newInputToggle);
     newElement.append(newP);
@@ -79,8 +81,8 @@ function itemResize() {
     for (let item of items) {
         if (!item.classList.contains('hidden')) {
             let p = item.querySelector("p");
-            let itemDiv = item.querySelector(".item");
-            let editItem = item.querySelector(".edit");
+            let itemDiv = item.querySelector(".js-item");
+            let editItem = item.querySelector(".js-edit");
             let height = p.offsetHeight + 13;
             if (!editItem.classList.contains('hidden')) {
                 height += editHeight;
@@ -137,7 +139,7 @@ function updateDB() {
     let key = 1;
     for (let item of items) {
         let p = item.querySelector("p");
-        let itemDiv = item.querySelector(".item");
+        let itemDiv = item.querySelector(".js-item");
         let str = "";
         if (itemDiv.classList.contains("done")) {
             str = p.textContent + " done";
@@ -169,11 +171,11 @@ function loadDB() {
 
 function updateButtons () {
     for (let item of items) {
-        let itemContext = item.querySelector('.item');
-        let deleteButton = item.querySelector('.destroy');
-        let toggleButton = item.querySelector('.toggle');
+        let itemContext = item.querySelector('.js-item');
+        let deleteButton = item.querySelector('.js-destroy');
+        let toggleButton = item.querySelector('.js-toggle');
         let p = item.querySelector('p');
-        let edit = item.querySelector('.edit');
+        let edit = item.querySelector('.js-edit');
         item.onmouseover = itemResize;
         item.onmouseout = itemResize;
         deleteButton.onclick = function () {
@@ -228,7 +230,7 @@ function updateButtons () {
 toggleAll.onclick = function () {
     let allchecked = true;
     for (let item of items) {
-        let itemDiv = item.querySelector('.item');
+        let itemDiv = item.querySelector('.js-item');
         if (!itemDiv.classList.contains('done')) {
             allchecked = false;
             break;
@@ -236,13 +238,13 @@ toggleAll.onclick = function () {
     }
     if (allchecked) {
         for (let item of items) {
-            let itemDiv = item.querySelector('.item');
+            let itemDiv = item.querySelector('.js-item');
             itemDiv.classList.remove('done');
         }
     }
     else {
         for (let item of items) {
-            let itemDiv = item.querySelector('.item');
+            let itemDiv = item.querySelector('.js-item');
             if (!itemDiv.classList.contains('done')) {
                 itemDiv.classList.add('done');
             }
@@ -275,7 +277,7 @@ completeButton.onclick = function () {
 
 function completeShow() {
     for (let item of items) {
-        let itemContext = item.querySelector('.item');
+        let itemContext = item.querySelector('.js-item');
         if (itemContext.classList.contains('done')) {
             item.classList.remove('hidden');
         }
@@ -298,7 +300,7 @@ activeButton.onclick = function () {
 
 function activeShow() {
     for (let item of items) {
-        let itemContext = item.querySelector('.item');
+        let itemContext = item.querySelector('.js-item');
         if (!itemContext.classList.contains('done')) {
             item.classList.remove('hidden');
         }
@@ -314,7 +316,7 @@ function activeShow() {
 
 clearButton.onclick = function () {
     for (let item of items) {
-        let itemContext = item.querySelector('.item');
+        let itemContext = item.querySelector('.js-item');
         if (itemContext.classList.contains('done')) {
             item.remove();
         }
@@ -334,12 +336,12 @@ input.onblur = function () {
 
 function listener() {
     document.body.addEventListener('keydown', function (e) {
-        if (e.keyCode === 27) {
+        if (e.keyCode === ESC_BUTTON) {
             input.focus();
         }
     });
     input.addEventListener('keydown', function(e) {
-        if (e.keyCode === 13 && this.value !== "") {
+        if (e.keyCode === ENTER_BUTTON && this.value !== "") {
             if (this.value.trim().length) {
                 todoConstructor(this.value);
                 this.value = "";
@@ -355,11 +357,11 @@ function listener() {
     });
 
     for(let item of items) {
-        let deleteButton = item.querySelector('.destroy');
+        let deleteButton = item.querySelector('.js-destroy');
         let p = item.querySelector('p');
-        let edit = item.querySelector('.edit');
+        let edit = item.querySelector('.js-edit');
         edit.addEventListener('keydown', function (e) {
-            if (e.keyCode === 13) {
+            if (e.keyCode === ENTER_BUTTON) {
                 p.classList.remove('hidden');
                 deleteButton.classList.remove('hidden');
                 edit.classList.add('hidden');

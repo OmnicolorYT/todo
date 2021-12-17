@@ -9,27 +9,27 @@
     <header>
         <h1>todos</h1>
     </header>
-    <section class="todo">
-        <input class="toggle-all" type="checkbox">
-        <input class="new-todo" type="text" placeholder="Что нужно сделать?" autofocus>
-        <ul class="todolist">
+    <section class="todo js-todo">
+        <input class="toggle-all js-toggle-all" type="checkbox">
+        <input class="new-todo js-new-todo" type="text" placeholder="Что нужно сделать?" autofocus>
+        <ul class="todolist js-todolist">
             <li class="">
-                <div class="item">
-                    <input class="toggle" type="checkbox">
+                <div class="item js-item">
+                    <input class="toggle js-toggle" type="checkbox">
                     <label>Покормить кота</label>
-                    <button class="destroy"></button>
-                    <input class="edit hidden" type="text">
+                    <button class="destroy js-destroy"></button>
+                    <input class="edit js-edit hidden" type="text">
                 </div>
             </li>
         </ul>
         <div class="footer">
-            <p class="counter">0 заданий осталось</p>
+            <p class="counter js-counter">0 заданий осталось</p>
             <div class="buttons">
-                <a class="all checked">Все</a>
-                <a class="active">Активные</a>
-                <a class="complete">Выполненные</a>
+                <a class="all js-all checked">Все</a>
+                <a class="active js-active">Активные</a>
+                <a class="complete js-complete">Выполненные</a>
             </div>
-            <a class="clear">Очистить выполненные</a>
+            <a class="clear js-clear">Очистить выполненные</a>
         </div>
     </section>
     <script src="script.js"></script>
